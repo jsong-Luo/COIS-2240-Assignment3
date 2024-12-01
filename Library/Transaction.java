@@ -2,6 +2,12 @@ package Assignement3;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Transaction {
     	//set static instance variables
@@ -70,4 +76,29 @@ public class Transaction {
 			System.out.println("Error: " + e.getMessage());
 		}    	
     }
+       //Add displayTransactionHistory method
+	public void displayTransactionHistory() {
+		System.out.println(" Transaction History ");
+		File file = new File("transactions.txt");
+		if(!file.exists()) {
+			System.out.println(" The file not exist. No transaction history found.");
+			return;
+		}
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader("file"));
+			boolean hasTransactions = false;
+			String line;
+			while((line = reader.readLine())!= null) {
+			     System.out.println(line);
+			     hasTransactions = true;
+			}
+			if(!hasTransactions) {
+				System.out.println("No Transactions Found.");
+			}
+		}catch(IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+	}
 }
