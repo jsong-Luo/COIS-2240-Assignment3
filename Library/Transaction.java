@@ -31,6 +31,7 @@ public class Transaction {
             book.borrowBook();
             member.borrowBook(book); 
             String transactionDetails = getCurrentDateTime() + " - Borrowing: " + member.getName() + " borrowed " + book.getTitle();
+            saveTransaction(transactionDetails);
             System.out.println(transactionDetails);
             return true;
         } else {
@@ -45,6 +46,7 @@ public class Transaction {
             member.returnBook(book);
             book.returnBook();
             String transactionDetails = getCurrentDateTime() + " - Returning: " + member.getName() + " returned " + book.getTitle();
+            saveTransaction(transactionDetails);
             System.out.println(transactionDetails);
         } else {
             System.out.println("This book was not borrowed by the member.");
@@ -55,5 +57,17 @@ public class Transaction {
     private String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
+    }
+        // Set a saveTransaction method
+    private void saveTransaction(String transactionDetails){
+    	BufferedWriter writer;
+		try {
+			writer = new BufferedWriter(new FileWriter("transactions.txt"));
+		    writer.write(transactionDetails);
+    	    writer.newLine();   
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error: " + e.getMessage());
+		}    	
     }
 }
