@@ -1,6 +1,9 @@
 package Assignement3;
 
+import java.lang.reflect.Member;
 import java.util.Scanner;
+
+import Assignment3.Book;
 
 public class LibraryManagement {
     private Library library = new Library();
@@ -39,8 +42,12 @@ public class LibraryManagement {
                     scanner.nextLine();
 
                     Member newMember = new Member(id, name);
-                    library.addMember(newMember);
+                    if(library.addMember(newMember)) {
                     System.out.println("Member added successfully.");
+                    }
+                    else {
+                    	System.out.println("Fail to add member due to member " + newMember.getId() + " existed. ");
+                    }
                     break;
                 case 2:
                     System.out.print("Enter book ID: ");
@@ -51,8 +58,12 @@ public class LibraryManagement {
                     scanner.nextLine();
 
                     Book newBook = new Book(id, title);
-                    library.addBook(newBook);
-                    System.out.println("Book added to library successfully.");
+                    if(library.addBook(newBook)) {
+                    	System.out.println("Book added to library successfully.");
+                    }
+                    else {
+                    	System.out.println("Fail to add Book due to book " + newBook.getId() + " " + newBook.getTitle() + " existed. ");
+                    }
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
