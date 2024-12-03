@@ -57,7 +57,14 @@ public class LibraryManagement {
                     
                     scanner.nextLine();
 
-                    Book newBook = new Book(id, title);
+                    Book newBook = new Book null;
+                    				//wrapping newBook in a try-catch block
+				    try {
+					   newBook = new Book(id, title);
+				    } catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error: Book ID is invalid. ");
+				    }
                     if(library.addBook(newBook)) {
                     	System.out.println("Book added to library successfully.");
                     }

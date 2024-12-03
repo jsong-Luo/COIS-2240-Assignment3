@@ -2,12 +2,16 @@ package Assignement3;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import Assignment3.Book;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Member;
 
 public class Transaction {
     	//set static instance variables
@@ -21,7 +25,7 @@ public class Transaction {
 	private Transaction() {
 		this.borrowBook = false;
 		this.currentDateTime = getCurrentDateTime();
-		returnBook(null, null);
+		//returnBook(null, null);
 	}
 
     	public static Transaction getInstance() {
@@ -66,11 +70,14 @@ public class Transaction {
     }
         // Set a saveTransaction method
     private void saveTransaction(String transactionDetails){
-    	BufferedWriter writer;
-		try {
-			writer = new BufferedWriter(new FileWriter("transactions.txt"));
+     	String fileName = "transactions.txt";
+    	String filePath = "C:\\Users\\songj\\OneDrive\\Documents\\GitHub\\COIS-2240-Assignment3\\Library" + File.separator + fileName;
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+			
 		    writer.write(transactionDetails);
-    	    writer.newLine();   
+    	    writer.newLine(); 
+            System.out.println("Transaction saved to: " + filePath);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error: " + e.getMessage());
@@ -79,14 +86,15 @@ public class Transaction {
        //Add displayTransactionHistory method
 	public void displayTransactionHistory() {
 		System.out.println(" Transaction History ");
-		File file = new File("transactions.txt");
+        String filePath = "C:\\Users\\songj\\OneDrive\\Documents\\GitHub\\COIS-2240-Assignment3\\Library" + File.separator + "transactions.txt";
+		File file = new File(filePath);
 		if(!file.exists()) {
 			System.out.println(" The file not exist. No transaction history found.");
 			return;
 		}
-		BufferedReader reader;
-		try {
-			reader = new BufferedReader(new FileReader("file"));
+	
+		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+
 			boolean hasTransactions = false;
 			String line;
 			while((line = reader.readLine())!= null) {
