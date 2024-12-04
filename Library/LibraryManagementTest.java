@@ -8,7 +8,8 @@ import org.junit.Test;
 
 import Assignement3.Transaction;
 import Assignment3.Book;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 public class LibraryManagementTest {
 
 	//Test book ID
@@ -71,6 +72,17 @@ public class LibraryManagementTest {
 
 		
 	}
+ 	//Question3 Singleton Validation
+     @Test
+     public void testSingletonTransaction() throws Exception {
+         //return the constructor of the Transaction class
+         Constructor<Transaction> constructors = Transaction.class.getDeclaredConstructor();
+         //Get the modifier of the constructor
+         int modifiers = constructors.getModifiers();
+         assertTrue(Modifier.isPrivate(modifiers));
+         assertEquals("Constructor is not private!", Modifier.PRIVATE, modifiers);
+         System.out.println("Constructor modifier: " + modifiers);
+     }   
 
 
 }
